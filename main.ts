@@ -2,7 +2,196 @@ namespace SpriteKind {
     export const Stumps = SpriteKind.create()
     export const ball = SpriteKind.create()
 }
+function addBatsman () {
+    batsman = sprites.create(img`
+. . f f f f f . . . . . . . . . 
+. . f f f d d . . . . . . . . . 
+. . f f d d d f . . . . . . . . 
+. . 1 1 f f f . . . . . . . . . 
+. . 1 1 1 1 1 . . . . . . . . . 
+. . 1 f f 1 1 . . . . . . . . . 
+. . 1 f f 1 1 . . . . . . . . . 
+. . 1 1 f f 1 1 . . . . . . . . 
+. . 1 1 1 1 1 1 1 . . . . . . . 
+. . 1 1 1 1 1 1 1 1 . . . . . . 
+. . 1 1 1 1 1 . . 1 1 f . . . . 
+. . f f f f . . . . f f . . . . 
+. . 1 1 1 1 . . . . f f . . . . 
+. . 1 1 1 1 1 . . . . . . . . . 
+. . 1 1 1 1 1 . . . . . . . . . 
+. . 1 1 . 1 1 1 . . . . . . . . 
+. . 1 1 . . 1 1 . . . . . . . . 
+. . 1 1 . . 1 1 1 . . . . . . . 
+. . 1 1 . . . 1 1 . . . . . . . 
+. . f f f . . f f f . . . . . . 
+`, SpriteKind.Player)
+    batsman.setPosition(66, 96)
+    batsman.vy = 0
+    willow = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . f . . . . . . . . . 
+. . . . . . f . . . . . . . . . 
+. . . . . . f . . . . . . . . . 
+. . . . . f f f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f 1 f . . . . . . . . 
+. . . . . f f f . . . . . . . . 
+`, SpriteKind.Player)
+    wickets = sprites.create(img`
+d d f f f f f d d f f f f f d d 
+f f f d d d f f f f d d d f f f 
+f e e d d d e f f e d d d e e f 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e d d d e e e e d d d e e e 
+e e e 1 1 1 e e e e 1 1 1 e e e 
+e e e d d d e e e e d d d e e e 
+e e e e e e e e e e e e e e e e 
+e e e e e e e e e e e e e e e e 
+`, SpriteKind.Stumps)
+    wickets.setPosition(80, 111)
+    gameStarted = 1
+}
+function throwBall () {
+    mySprite = sprites.create(img`
+. 1 2 1 1 2 1 . 
+1 1 2 1 1 2 1 1 
+1 1 2 1 1 2 1 1 
+1 1 2 1 1 2 1 1 
+1 1 2 1 1 2 1 1 
+1 1 2 1 1 2 1 1 
+1 1 2 1 1 2 1 1 
+. 1 2 1 1 2 1 . 
+`, SpriteKind.ball)
+    for (let index = 0; index <= 4; index++) {
+        mySprite.setVelocity(Math.randomRange(-50, 50), 100)
+        transformSprites.changeRotation(mySprite, index)
+        pause(100)
+    }
+    mySprite.destroy()
+}
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    batsman.x += -5
+})
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (gameStarted == 1) {
+        throwBall()
+    }
+})
+sprites.onOverlap(SpriteKind.ball, SpriteKind.Stumps, function (sprite, otherSprite) {
+    hitStumps()
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.runImageAnimation(
+    willow,
+    [img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . f . . . . . . . . 
+. . . . . . . f . . . . . . . . 
+. . . . . . . f . . . . . . . . 
+. . . . . . f f f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f 1 f . . . . . . . 
+. . . . . . f f f . . . . . . . 
+`,img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . f . . . . . . . . . . 
+. . . . . . f . . . . . . . . . 
+. . . . . . . f . f . . . . . . 
+. . . . . . . . f 1 f . . . . . 
+. . . . . . . f 1 1 1 f f . . . 
+. . . . . . . f 1 1 1 1 1 f . . 
+. . . . . . . . f 1 1 1 1 1 f . 
+. . . . . . . . . f 1 1 1 1 1 f 
+. . . . . . . . . . f 1 1 1 1 f 
+. . . . . . . . . . . f 1 1 f . 
+. . . . . . . . . . . . f f . . 
+`,img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . f f f f f f f f f f 
+. . f f f f f 1 1 1 1 1 1 1 1 f 
+. . . . . . f f f f f f f f f f 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`,img`
+. . . . . . . . f f f . . . . . 
+. . . . . . . f 1 1 1 f f f . . 
+. . . . . . . f 1 1 1 1 1 f . . 
+. . . . . . f 1 1 1 1 1 f . . . 
+. . . . . . f 1 1 1 1 f . . . . 
+. . . . . f 1 1 1 1 1 f . . . . 
+. . . . . f 1 1 1 1 f . . . . . 
+. . . . . f 1 1 1 f . . . . . . 
+. . . . . . f 1 1 f . . . . . . 
+. . . . . f . f f . . . . . . . 
+. . . . . f . . . . . . . . . . 
+. . . . f . . . . . . . . . . . 
+. . . f . . . . . . . . . . . . 
+. . . f . . . . . . . . . . . . 
+. . f . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`,img`
+. . . . . . . . . . . . . . . . 
+. . . f f f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f 1 f . . . . . . . . . . 
+. . . f f f . . . . . . . . . . 
+. . . . f . . . . . . . . . . . 
+. . . . f . . . . . . . . . . . 
+. . . . f . . . . . . . . . . . 
+. . . . f . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`],
+    75,
+    false
+    )
+})
 function hitStumps () {
+    mySprite.destroy()
+    music.setVolume(8)
+    music.wawawawaa.play()
     animation.runImageAnimation(
     wickets,
     [img`
@@ -91,14 +280,26 @@ d d d d d d d d d d d d d d d d
 e e e e e e e e e e e e e e e e 
 e e e e e e e e e e e e e e e e 
 `],
-    150,
+    75,
     false
     )
+    pause(2000)
+    wickets.destroy()
+    batsman.destroy()
+    willow.destroy()
+    gameStarted = 0
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    hitStumps()
+    addBatsman()
 })
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    batsman.x += 5
+})
+let mySprite: Sprite = null
+let gameStarted = 0
 let wickets: Sprite = null
+let willow: Sprite = null
+let batsman: Sprite = null
 scene.setBackgroundImage(img`
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
@@ -221,40 +422,8 @@ f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `)
-let ball2 = sprites.create(img`
-. . . . 1 2 1 1 1 1 2 1 . . . . 
-. . 1 1 2 2 2 1 1 2 2 2 1 1 . . 
-. 1 1 1 1 2 1 1 1 1 2 1 1 1 1 . 
-. 1 1 1 2 2 2 1 1 2 2 2 1 1 1 . 
-1 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 
-1 1 1 1 2 2 2 1 1 2 2 2 1 1 1 1 
-1 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 
-1 1 1 1 2 2 2 1 1 2 2 2 1 1 1 1 
-1 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 
-1 1 1 1 2 2 2 1 1 2 2 2 1 1 1 1 
-1 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 
-1 1 1 1 2 2 2 1 1 2 2 2 1 1 1 1 
-. 1 1 1 1 2 1 1 1 1 2 1 1 1 1 . 
-. 1 1 1 2 2 2 1 1 2 2 2 1 1 1 . 
-. . 1 1 1 2 1 1 1 1 2 1 1 1 . . 
-. . . . 2 2 2 1 1 2 2 2 . . . . 
-`, SpriteKind.ball)
-wickets = sprites.create(img`
-d d f f f f f d d f f f f f d d 
-f f f d d d f f f f d d d f f f 
-f e e d d d e f f e d d d e e f 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e d d d e e e e d d d e e e 
-e e e 1 1 1 e e e e 1 1 1 e e e 
-e e e d d d e e e e d d d e e e 
-e e e e e e e e e e e e e e e e 
-e e e e e e e e e e e e e e e e 
-`, SpriteKind.Stumps)
-wickets.setPosition(80, 111)
+game.onUpdate(function () {
+    if (gameStarted == 1) {
+        willow.setPosition(batsman.x + 5, batsman.y + 5)
+    }
+})
