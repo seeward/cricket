@@ -5,7 +5,7 @@
         "animation": "*",
         "pxt-arcade-image-transform": "github:robo-technical-group/pxt-arcade-image-transform#v1.0.8"
     },
-    "description": "",
+    "description": "Quick click cricket game",
     "files": [
         "main.blocks",
         "main.ts",
