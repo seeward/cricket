@@ -35,11 +35,12 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.Stumps, function (sprite, otherSpr
     hitStumps()
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.bat, function (sprite, otherSprite) {
-    // lets get a random show
-    pickedShot = shots[Math.floor(Math.random() * shots.length)]
-    sprite.vy = pickedShot.y
-    sprite.vx = pickedShot.x
+
     if (!(hasScored)) {
+        // lets get a random show
+        pickedShot = shots[Math.floor(Math.random() * shots.length)]
+        sprite.vy = pickedShot.y
+        sprite.vx = pickedShot.x
         info.changeScoreBy(pickedShot.pt)
         hasScored = true
     }
@@ -65,7 +66,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . f 1 f . . . . . . .
             . . . . . . f 1 f . . . . . . .
             . . . . . . f f f . . . . . . .
-  `,img`
+    `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -82,7 +83,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . f 1 1 1 1 f
             . . . . . . . . . . . f 1 1 f .
             . . . . . . . . . . . . f f . .
-  `,img`
+    `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -99,7 +100,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+    `,img`
             . . . . . . . . f f f . . . . .
             . . . . . . . f 1 1 1 f f f . .
             . . . . . . . f 1 1 1 1 1 f . .
@@ -116,7 +117,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . f . . . . . . . . . . . .
             . . f . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+    `,img`
             . . . . . . . . . . . . . . . .
             . . . f f f . . . . . . . . . .
             . . . f 1 f . . . . . . . . . .
@@ -133,7 +134,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . f . . . . . . . . . . .
             . . . . f . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+    `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -157,7 +158,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function addBatsman () {
-    batsman = sprites.create(img`
+    if(gameStarted !== 1){
+        batsman = sprites.create(img`
         . . f f f f f . . . . . . . . .
         . . f f f d d . . . . . . . . .
         . . f f d d d f . . . . . . . .
@@ -179,9 +181,9 @@ function addBatsman () {
         . . 1 1 . . . 1 1 . . . . . . .
         . . f f f . . f f f . . . . . .
     `, SpriteKind.Player)
-    batsman.setPosition(66, 96)
-    batsman.vy = 0
-    willow = sprites.create(img`
+        batsman.setPosition(66, 96)
+        batsman.vy = 0
+        willow = sprites.create(img`
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
@@ -199,7 +201,7 @@ function addBatsman () {
         . . . . . f 1 f . . . . . . . .
         . . . . . f f f . . . . . . . .
     `, SpriteKind.bat)
-    wickets = sprites.create(img`
+        wickets = sprites.create(img`
         d d f f f f f d d f f f f f d d
         f f f d d d f f f f d d d f f f
         f e e d d d e f f e d d d e e f
@@ -217,8 +219,10 @@ function addBatsman () {
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
     `, SpriteKind.Stumps)
-    wickets.setPosition(80, 111)
-    gameStarted = 1
+        wickets.setPosition(80, 111)
+        gameStarted = 1
+    }
+    
 }
 function hitStumps () {
     mySprite.destroy()
@@ -242,7 +246,7 @@ function hitStumps () {
         e e d d d d e e e e d d d d e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d f f f f d d d d f f d d d d
         d d f f f f f d d d f f f f d d
         d d e e d d d e e e e d d d e d
@@ -259,7 +263,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d f f f f f d d d f f f f d d
         d d d d d f f f d d d d f f f d
@@ -276,7 +280,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -293,7 +297,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -369,23 +373,15 @@ cloud.x = 0
 cloud.y = 7
 cloud.vx = 10
 let cloud2 = sprites.create(img`
-    . . . . . . 1 1 1 1 . . . . . .
-    . . . . . 1 1 . . 1 1 1 1 . . .
-    . . . . . 1 . . . . . . 1 . . .
-    . . . 1 1 1 . . 1 . . 1 1 . . .
-    . . 1 1 . 1 . . 1 . . . 1 1 . .
-    . 1 1 . . . . . 1 . . . . 1 1 .
-    . 1 . . . . . 1 1 . . . . . 1 1
-    . 1 . . 1 1 1 1 . . . 1 . . 1 1
-    . 1 . . . . . . . . 1 . . . 1 .
-    . 1 1 . . . . . . 1 . . . . 1 .
-    . . 1 1 . . 1 1 1 1 . 1 1 . 1 .
-    . . . 1 1 . . . . . . 1 . 1 1 .
-    . . . . 1 1 1 1 1 . . . . 1 . .
-    . . . . . . . . 1 1 . 1 1 1 . .
-    . . . . . . . . . 1 1 1 . . . .
-    . . . . . . . . . . . . . . . .
-`, SpriteKind.Player)
+    . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . f . . . . . 1 1 1 1 1 1 1 1 1 1 1
+    . 2 f . . . f f . . . . 1 1 1 1 2 1 1 1 2 1 1 1
+    f f f f f f f f . . . 1 1 1 1 2 2 2 2 2 2 2 1 1
+    f f f f f f f f 1 1 1 1 1 1 1 1 2 2 2 2 2 1 1 1
+    . . f f f . . . . . . 1 1 1 1 1 1 2 2 2 1 1 1 1
+    . . . f f f . . . . . . 1 1 1 1 1 1 2 1 1 1 1 1
+    . . . . . . . . . . . . . 1 1 1 1 1 1 1 1 1 1 1
+`, SpriteKind.clouds)
 cloud2.x = 170
 cloud2.y = 7
 cloud2.vx = -5
