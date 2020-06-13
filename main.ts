@@ -5,22 +5,23 @@ namespace SpriteKind {
     export const clouds = SpriteKind.create()
 }
 function throwBall () {
-    mySprite = sprites.create(img`
-        . 1 2 1 1 2 1 .
-        1 1 2 1 1 2 1 1
-        1 1 2 1 1 2 1 1
-        1 1 2 1 1 2 1 1
-        1 1 2 1 1 2 1 1
-        1 1 2 1 1 2 1 1
-        1 1 2 1 1 2 1 1
-        . 1 2 1 1 2 1 .
-    `, SpriteKind.ball)
+    seconds = 0
+    ballTimer = setInterval(function () {
+        seconds++;
+    }, 1);
+mySprite = sprites.create(img`
+    . 1 2 1 1 2 1 .
+    1 1 2 1 1 2 1 1
+    1 1 2 1 1 2 1 1
+    1 1 2 1 1 2 1 1
+    1 1 2 1 1 2 1 1
+    1 1 2 1 1 2 1 1
+    1 1 2 1 1 2 1 1
+    . 1 2 1 1 2 1 .
+`, SpriteKind.ball)
     ballBowled = 1
-    for (let index = 0; index <= 4; index++) {
-        mySprite.setVelocity(Math.randomRange(-50, 50), 100)
-        transformSprites.changeRotation(mySprite, index)
-        pause(100)
-    }
+    mySprite.setVelocity(Math.randomRange(-50, 50), Math.randomRange(50, 150))
+    transformSprites.changeRotation(mySprite, Math.randomRange(0,180))
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     batsman.x += -2
@@ -36,17 +37,17 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.Stumps, function (sprite, otherSpr
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.bat, function (sprite, otherSprite) {
     if (!(hasScored)) {
-        // lets get a random show
-        pickedShot = shots[Math.floor(Math.random() * shots.length)]
-        sprite.vy = pickedShot.y
-        sprite.vx = pickedShot.x
-        info.changeScoreBy(pickedShot.pt)
-        hasScored = true
-        console.log(pickedShot)
+    	     pickedShot = shots[Math.floor(Math.random() * shots.length)]
+            mySprite.setVelocity(pickedShot.x, pickedShot.y)
+            // mySprite.ay = -100
+            info.changeScoreBy(pickedShot.pt)
+            hasScored = true
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (gameStarted) {
+        control.clearInterval(ballTimer, control.IntervalMode.Interval)
+console.logValue("seconds: ", seconds)
         animation.runImageAnimation(
         willow,
         [img`
@@ -66,7 +67,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . f 1 f . . . . . . .
             . . . . . . f 1 f . . . . . . .
             . . . . . . f f f . . . . . . .
-  `,img`
+        `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -83,7 +84,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . f 1 1 1 1 f
             . . . . . . . . . . . f 1 1 f .
             . . . . . . . . . . . . f f . .
-  `,img`
+        `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -100,7 +101,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+        `,img`
             . . . . . . . . f f f . . . . .
             . . . . . . . f 1 1 1 f f f . .
             . . . . . . . f 1 1 1 1 1 f . .
@@ -117,7 +118,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . f . . . . . . . . . . . .
             . . f . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+        `,img`
             . . . . . . . . . . . . . . . .
             . . . f f f . . . . . . . . . .
             . . . f 1 f . . . . . . . . . .
@@ -134,7 +135,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . f . . . . . . . . . . .
             . . . . f . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-  `,img`
+        `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -155,6 +156,14 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         50,
         false
         )
+        // if (mySprite && seconds < 60) {
+        //     pickedShot = shots[Math.floor(Math.random() * shots.length)]
+        //     mySprite.setVelocity(pickedShot.x, pickedShot.y)
+        //     // mySprite.ay = -100
+        //     info.changeScoreBy(pickedShot.pt)
+        //     hasScored = true
+        //     console.log(pickedShot)
+        // }
     }
 })
 function addBatsman () {
@@ -257,7 +266,7 @@ function hitStumps () {
         e e d d d d e e e e d d d d e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d f f f f d d d d f f d d d d
         d d f f f f f d d d f f f f d d
         d d e e d d d e e e e d d d e d
@@ -274,7 +283,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d f f f f f d d d f f f f d d
         d d d d d f f f d d d d f f f d
@@ -291,7 +300,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -308,7 +317,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-  `,img`
+    `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -474,6 +483,8 @@ let mySprite: Sprite = null
 let gameStarted = 0
 let shots: Shot[] = []
 let pickedShot: Shot = null
+let seconds:number = 0
+let ballTimer: number
 declare type Shot = {
     x: number,
     y: number,
@@ -643,6 +654,12 @@ game.onUpdate(function () {
     if (gameStarted == 1) {
         willow.setPosition(batsman.x + 7, batsman.y + 5)
     }
+    if(mySprite){
+        if (mySprite.y > 140) {
+            mySprite.destroy()
+        }
+    }
+    
     if (cloud.x > 170) {
         cloud.x = -10
     }
