@@ -21,7 +21,7 @@ mySprite = sprites.create(img`
 `, SpriteKind.ball)
     ballBowled = 1
     mySprite.setVelocity(Math.randomRange(-50, 50), Math.randomRange(50, 150))
-    transformSprites.changeRotation(mySprite, Math.randomRange(0,180))
+    transformSprites.changeRotation(mySprite, Math.randomRange(0, 180))
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     batsman.x += -2
@@ -37,11 +37,11 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.Stumps, function (sprite, otherSpr
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.bat, function (sprite, otherSprite) {
     if (!(hasScored)) {
-    	     pickedShot = shots[Math.floor(Math.random() * shots.length)]
-            mySprite.setVelocity(pickedShot.x, pickedShot.y)
-            // mySprite.ay = -100
-            info.changeScoreBy(pickedShot.pt)
-            hasScored = true
+        pickedShot = shots[Math.floor(Math.random() * shots.length)]
+        mySprite.setVelocity(50, 50)
+        // mySprite.ay = -100
+        info.changeScoreBy(pickedShot.pt)
+        hasScored = true
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -67,7 +67,7 @@ console.logValue("seconds: ", seconds)
             . . . . . . f 1 f . . . . . . .
             . . . . . . f 1 f . . . . . . .
             . . . . . . f f f . . . . . . .
-        `,img`
+  `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -84,7 +84,7 @@ console.logValue("seconds: ", seconds)
             . . . . . . . . . . f 1 1 1 1 f
             . . . . . . . . . . . f 1 1 f .
             . . . . . . . . . . . . f f . .
-        `,img`
+  `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -101,7 +101,7 @@ console.logValue("seconds: ", seconds)
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-        `,img`
+  `,img`
             . . . . . . . . f f f . . . . .
             . . . . . . . f 1 1 1 f f f . .
             . . . . . . . f 1 1 1 1 1 f . .
@@ -118,7 +118,7 @@ console.logValue("seconds: ", seconds)
             . . . f . . . . . . . . . . . .
             . . f . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-        `,img`
+  `,img`
             . . . . . . . . . . . . . . . .
             . . . f f f . . . . . . . . . .
             . . . f 1 f . . . . . . . . . .
@@ -135,7 +135,7 @@ console.logValue("seconds: ", seconds)
             . . . . f . . . . . . . . . . .
             . . . . f . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
-        `,img`
+  `,img`
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
@@ -156,14 +156,6 @@ console.logValue("seconds: ", seconds)
         50,
         false
         )
-        // if (mySprite && seconds < 60) {
-        //     pickedShot = shots[Math.floor(Math.random() * shots.length)]
-        //     mySprite.setVelocity(pickedShot.x, pickedShot.y)
-        //     // mySprite.ay = -100
-        //     info.changeScoreBy(pickedShot.pt)
-        //     hasScored = true
-        //     console.log(pickedShot)
-        // }
     }
 })
 function addBatsman () {
@@ -266,7 +258,7 @@ function hitStumps () {
         e e d d d d e e e e d d d d e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-    `,img`
+  `,img`
         d d f f f f d d d d f f d d d d
         d d f f f f f d d d f f f f d d
         d d e e d d d e e e e d d d e d
@@ -283,7 +275,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-    `,img`
+  `,img`
         d d d d d d d d d d d d d d d d
         d d f f f f f d d d f f f f d d
         d d d d d f f f d d d d f f f d
@@ -300,7 +292,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-    `,img`
+  `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -317,7 +309,7 @@ function hitStumps () {
         e e e d d d e e e d d d d e e e
         e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e
-    `,img`
+  `,img`
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
         d d d d d d d d d d d d d d d d
@@ -484,6 +476,7 @@ let gameStarted = 0
 let shots: Shot[] = []
 let pickedShot: Shot = null
 let seconds:number = 0
+shots = [{ x: 100, y: -20, pt: 1 }, { x: -100, y: -20, pt: 1 }, { x: 20, y: -100, pt: 6 }, { x: 20, y: -100, pt: 6 }]
 let ballTimer: number
 declare type Shot = {
     x: number,
@@ -525,7 +518,6 @@ let cloud2 = sprites.create(img`
 cloud2.x = 170
 cloud2.y = 7
 cloud2.vx = -5
-shots = [{ x: 100, y: -20, pt: 1 }, { x: -100, y: -20, pt: 1 }, { x: 20, y: -100, pt: 6 }, { x: 20, y: -100, pt: 6 }]
 scene.setBackgroundImage(img`
     9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
     9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
@@ -648,18 +640,18 @@ scene.setBackgroundImage(img`
     7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
     7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
 `)
+music.powerUp.play()
 gameStarted = 0
 // this is called on every frame
 game.onUpdate(function () {
     if (gameStarted == 1) {
         willow.setPosition(batsman.x + 7, batsman.y + 5)
     }
-    if(mySprite){
+    if (mySprite) {
         if (mySprite.y > 140) {
             mySprite.destroy()
         }
     }
-    
     if (cloud.x > 170) {
         cloud.x = -10
     }
